@@ -4,7 +4,7 @@ namespace MetaRename.Views;
 
 public partial class MainWindow : Window
 {
-    public static Window Instance { get; set; }
+    public static Window Instance { get; private set; }
     
     public MainWindow() {
         InitializeComponent();

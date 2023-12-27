@@ -1,6 +1,7 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="using:MetaRename.ViewModels"
+        xmlns:views="using:MetaRename.Views"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
@@ -29,25 +30,7 @@
             </ExperimentalAcrylicBorder.Material>
         </ExperimentalAcrylicBorder>
         
-        <StackPanel Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <StackPanel HorizontalAlignment="Center" Margin="0,0,0,100">
-                <TextBlock HorizontalAlignment="Center" FontSize="48">MetaRename</TextBlock>
-                <TextBlock HorizontalAlignment="Center" Margin="0,20,0,0">Version 1.0</TextBlock>
-                <TextBlock HorizontalAlignment="Center" Margin="0,0,0,20">By Leon Steinbach</TextBlock>
-                <TextBlock HorizontalAlignment="Center">MetaRename allows you to batch rename files using their meta data.</TextBlock>
-            </StackPanel>
-            <WrapPanel HorizontalAlignment="Center">
-                <ToolTip.Tip>
-                    <StackPanel>
-                        <TextBlock>Select one or multiple folders where the files you want to rename are located</TextBlock>
-                    </StackPanel>
-                </ToolTip.Tip>
-                <Button VerticalAlignment="Center" Command="{Binding OpenFolderCommand}">
-                    <PathIcon Data="{StaticResource FolderRegular}" />
-                </Button>
-                <TextBlock VerticalAlignment="Center" Margin="10,0,0,0">Select folders</TextBlock>
-            </WrapPanel>
-        </StackPanel>
+        <views:WelcomeView />
     </Panel>
 
 </Window>
