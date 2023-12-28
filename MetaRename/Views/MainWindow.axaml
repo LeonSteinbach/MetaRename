@@ -30,7 +30,9 @@
             </ExperimentalAcrylicBorder.Material>
         </ExperimentalAcrylicBorder>
         
-        <views:WelcomeView />
+        <DockPanel Margin="50">
+            <views:WelcomeView />
+        </DockPanel>
     </Panel>
 
 </Window>

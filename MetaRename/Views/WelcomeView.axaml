@@ -12,7 +12,7 @@
     </Design.DataContext>
     
     <StackPanel Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <StackPanel HorizontalAlignment="Center" Margin="0,0,0,100">
+        <StackPanel HorizontalAlignment="Center" Margin="0,0,0,50">
             <TextBlock HorizontalAlignment="Center" FontSize="48">MetaRename</TextBlock>
             <TextBlock HorizontalAlignment="Center" Margin="0,20,0,0">Version 1.0</TextBlock>
             <TextBlock HorizontalAlignment="Center" Margin="0,0,0,20">By Leon Steinbach</TextBlock>
@@ -29,5 +29,16 @@
             </Button>
             <TextBlock VerticalAlignment="Center" Margin="10,0,0,0">Select folders</TextBlock>
         </WrapPanel>
+        <DockPanel HorizontalAlignment="Center" MaxWidth="600" Height="300">
+            <CheckBox DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="0,20,0,20"
+                      IsChecked="{Binding IncludeSubfolders}">Include subfolders</CheckBox>
+            <DataGrid DockPanel.Dock="Bottom" HorizontalAlignment="Center" BorderThickness="1" BorderBrush="Gray"
+                      IsVisible="{Binding AreFoldersSelected}"
+                      ItemsSource="{Binding SelectedFolders}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Width="*" Header="Path" Binding="{Binding LocalPath}" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </DockPanel>
     </StackPanel>
 </UserControl>
