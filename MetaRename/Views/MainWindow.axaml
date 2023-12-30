@@ -35,7 +35,8 @@
             </Grid>
         
             <WrapPanel Grid.Row="1" Margin="0,0,0,50" HorizontalAlignment="Center">
-                <Button Command="{Binding BackViewCommand}">Back</Button>
+                <Button Command="{Binding BackViewCommand}"
+                        IsVisible="{Binding ShowBackViewButton}">Back</Button>
                 <Button Command="{Binding ContinueViewCommand}">Continue</Button>
             </WrapPanel>
         </Grid>

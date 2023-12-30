@@ -8,6 +8,12 @@ namespace MetaRename.ViewModels;
 
 public class MainWindowViewModel : ViewModelBase
 {
+    public bool ShowBackViewButton => Content?.GetType() != typeof(SelectFoldersView);
+
+    private UserControl? selectFoldersView;
+    private UserControl? filterFilesView;
+    private UserControl? renameFilesView;
+    
     private UserControl? content;
 
     public UserControl? Content {
@@ -15,6 +21,7 @@ public class MainWindowViewModel : ViewModelBase
         set {
             content = value;
             this.RaisePropertyChanged();
+            this.RaisePropertyChanged(nameof(ShowBackViewButton));
         }
     }
 
@@ -23,36 +30,32 @@ public class MainWindowViewModel : ViewModelBase
     public ICommand ContinueViewCommand { get; }
 
     public MainWindowViewModel() {
-        content = new SelectFoldersView();
+        selectFoldersView = new SelectFoldersView();
+        filterFilesView = new FilterFilesView();
+        renameFilesView = new RenameFilesView();
+        
+        content = selectFoldersView;
         
         BackViewCommand = ReactiveCommand.Create(() => {
             Type? contentType = Content?.GetType();
-            
-            switch (contentType) {
-                case not null when contentType == typeof(SelectFoldersView):
-                    break;
-                case not null when contentType == typeof(FilterFilesView):
-                    Content = new SelectFoldersView();
-                    break;
-                case not null when contentType == typeof(RenameFilesView):
-                    Content = new FilterFilesView();
-                    break;
-            }
+
+            Content = contentType switch {
+                _ when contentType == typeof(SelectFoldersView) => Content,
+                _ when contentType == typeof(FilterFilesView) => selectFoldersView,
+                _ when contentType == typeof(RenameFilesView) => filterFilesView,
+                _ => Content
+            };
         });
         
         ContinueViewCommand = ReactiveCommand.Create(() => {
             Type? contentType = Content?.GetType();
             
-            switch (Content) {
-                case not null when contentType == typeof(SelectFoldersView):
-                    Content = new FilterFilesView();
-                    break;
-                case not null when contentType == typeof(FilterFilesView):
-                    Content = new RenameFilesView();
-                    break;
-                case not null when contentType == typeof(RenameFilesView):
-                    break;
-            }
+            Content = contentType switch {
+                _ when contentType == typeof(SelectFoldersView) => filterFilesView,
+                _ when contentType == typeof(FilterFilesView) => renameFilesView,
+                _ when contentType == typeof(RenameFilesView) => Content,
+                _ => Content
+            };
         });
     }
 }
