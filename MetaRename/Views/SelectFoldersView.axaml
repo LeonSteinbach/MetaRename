@@ -4,11 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:MetaRename.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="MetaRename.Views.WelcomeView"
-             x:DataType="vm:WelcomeViewModel">
+             x:Class="MetaRename.Views.SelectFoldersView"
+             x:DataType="vm:SelectFoldersViewModel">
     
     <Design.DataContext>
-        <vm:WelcomeViewModel />
+        <vm:SelectFoldersViewModel />
     </Design.DataContext>
     
     <StackPanel Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center">

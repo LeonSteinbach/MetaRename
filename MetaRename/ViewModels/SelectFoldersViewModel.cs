@@ -8,7 +8,7 @@ using ReactiveUI;
 
 namespace MetaRename.ViewModels;
 
-public class WelcomeViewModel : ViewModelBase
+public class SelectFoldersViewModel : ViewModelBase
 {
     public ICommand OpenFolderCommand { get; }
 
@@ -35,7 +35,7 @@ public class WelcomeViewModel : ViewModelBase
         }
     }
 
-    public WelcomeViewModel() {
+    public SelectFoldersViewModel() {
         SelectedFolders = [];
         
         OpenFolderCommand = ReactiveCommand.Create(async () => {

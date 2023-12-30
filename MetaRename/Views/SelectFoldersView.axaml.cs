@@ -5,11 +5,11 @@ using MetaRename.ViewModels;
 
 namespace MetaRename.Views;
 
-public partial class WelcomeView : UserControl
+public partial class SelectFoldersView : UserControl
 {
-    public WelcomeView() {
+    public SelectFoldersView() {
         InitializeComponent();
 
-        DataContext = new WelcomeViewModel();
+        DataContext = new SelectFoldersViewModel();
     }
 }

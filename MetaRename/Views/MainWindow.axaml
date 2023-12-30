@@ -1,7 +1,6 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="using:MetaRename.ViewModels"
-        xmlns:views="using:MetaRename.Views"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
@@ -30,9 +29,16 @@
             </ExperimentalAcrylicBorder.Material>
         </ExperimentalAcrylicBorder>
         
-        <DockPanel Margin="50">
-            <views:WelcomeView />
-        </DockPanel>
+        <Grid ColumnDefinitions="*" RowDefinitions="*,Auto">
+            <Grid Grid.Row="0" Margin="0,50,0,20" ColumnDefinitions="*">
+                <ContentControl Content="{Binding Content}" />
+            </Grid>
+        
+            <WrapPanel Grid.Row="1" Margin="0,0,0,50" HorizontalAlignment="Center">
+                <Button Command="{Binding BackViewCommand}">Back</Button>
+                <Button Command="{Binding ContinueViewCommand}">Continue</Button>
+            </WrapPanel>
+        </Grid>
     </Panel>
 
 </Window>
