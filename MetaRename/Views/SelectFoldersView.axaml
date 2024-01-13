@@ -5,10 +5,10 @@
              xmlns:vm="using:MetaRename.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="MetaRename.Views.SelectFoldersView"
-             x:DataType="vm:SelectFoldersViewModel">
+             x:DataType="vm:MainViewModel">
     
     <Design.DataContext>
-        <vm:SelectFoldersViewModel />
+        <vm:MainViewModel />
     </Design.DataContext>
     
     <StackPanel Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -34,7 +34,8 @@
                       IsChecked="{Binding IncludeSubfolders}">Include subfolders</CheckBox>
             <DataGrid DockPanel.Dock="Bottom" HorizontalAlignment="Center" BorderThickness="1" BorderBrush="Gray"
                       IsVisible="{Binding AreFoldersSelected}"
-                      ItemsSource="{Binding SelectedFolders}">
+                      ItemsSource="{Binding SelectedFolders}"
+                      IsReadOnly="True">
                 <DataGrid.Columns>
                     <DataGridTextColumn Width="*" Header="Path" Binding="{Binding LocalPath}" />
                 </DataGrid.Columns>

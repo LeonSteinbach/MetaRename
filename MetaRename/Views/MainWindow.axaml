@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="MetaRename.Views.MainWindow"
-        x:DataType="vm:MainWindowViewModel"
+        x:DataType="vm:MainViewModel"
         Icon="/Assets/avalonia-logo.ico"
         Title="MetaRename"
         TransparencyLevelHint="AcrylicBlur"
@@ -15,7 +15,7 @@
         WindowStartupLocation="CenterScreen">
 
     <Design.DataContext>
-        <vm:MainWindowViewModel />
+        <vm:MainViewModel />
     </Design.DataContext>
     
     <Panel>
