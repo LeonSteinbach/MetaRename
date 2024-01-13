@@ -3,9 +3,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:MetaRename.ViewModels"
+             xmlns:converters="clr-namespace:MetaRename.ViewModels.Converters"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="MetaRename.Views.FilterFilesView"
              x:DataType="vm:MainViewModel">
+    
+    <UserControl.Resources>
+        <converters:UriToExtensionConverter x:Key="UriToExtensionConverter"></converters:UriToExtensionConverter>
+    </UserControl.Resources>
     
     <Design.DataContext>
         <vm:MainViewModel />
@@ -18,6 +23,8 @@
                   ItemsSource="{Binding FilteredFiles}" IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Width="*" Header="Path" Binding="{Binding LocalPath}" />
+                <DataGridTextColumn Width="100" Header="Type" Binding="{Binding LocalPath, 
+                                    Converter={StaticResource UriToExtensionConverter}}" />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

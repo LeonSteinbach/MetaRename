@@ -43,7 +43,8 @@ public class MainViewModel : ViewModelBase
         get => includeSubfolders;
         set {
             includeSubfolders = value;
-            this.RaiseAndSetIfChanged(ref includeSubfolders, value);
+            this.RaisePropertyChanged();
+            FilterFiles();
         }
     }
 
@@ -86,7 +87,7 @@ public class MainViewModel : ViewModelBase
         FilteredFiles = [];
         SearchOption searchOption = IncludeSubfolders ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
         foreach (Uri folder in SelectedFolders) {
-            foreach (string file in Directory.GetFiles(folder.LocalPath, FilterFilesText, searchOption)) {
+            foreach (string file in Directory.GetFiles(folder.LocalPath, "*", searchOption)) {
                 FilteredFiles.Add(new Uri(file));
             }
         }
