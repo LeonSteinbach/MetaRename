@@ -18,7 +18,8 @@
     
     <Grid RowDefinitions="Auto,Auto,*" Margin="50 0">
         <TextBlock Grid.Row="0" FontSize="24" Margin="0,0,0,20">Filter files</TextBlock>
-        <TextBox Grid.Row="1" Watermark="Filter files" Margin="0,0,0,20" Text="{Binding FilterFilesText}" />
+        <TextBox Grid.Row="1" Watermark="Filter files using regular expressions" Margin="0,0,0,20"
+                 Text="{Binding FilterFilesText}" Foreground="{Binding FilterFilesTextColor}" />
         <DataGrid Grid.Row="2" BorderThickness="1" BorderBrush="Gray"
                   ItemsSource="{Binding FilteredFiles}" IsReadOnly="True">
             <DataGrid.Columns>

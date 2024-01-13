@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows.Input;
 using Avalonia.Controls;
+using Avalonia.Media;
 using Avalonia.Platform.Storage;
-using DynamicData;
 using MetaRename.Views;
 using ReactiveUI;
 
@@ -16,17 +16,12 @@ public class MainViewModel : ViewModelBase
 {
     public bool ShowBackViewButton => Content?.GetType() != typeof(SelectFoldersView);
 
-    private UserControl? selectFoldersView;
-    private UserControl? filterFilesView;
-    private UserControl? renameFilesView;
-    
     private UserControl? content;
 
     public UserControl? Content {
         get => content;
         set {
-            content = value;
-            this.RaisePropertyChanged();
+            this.RaiseAndSetIfChanged(ref content, value);
             this.RaisePropertyChanged(nameof(ShowBackViewButton));
         }
     }
@@ -42,8 +37,7 @@ public class MainViewModel : ViewModelBase
     public bool IncludeSubfolders {
         get => includeSubfolders;
         set {
-            includeSubfolders = value;
-            this.RaisePropertyChanged();
+            this.RaiseAndSetIfChanged(ref includeSubfolders, value);
             FilterFiles();
         }
     }
@@ -55,8 +49,7 @@ public class MainViewModel : ViewModelBase
     public ObservableCollection<Uri> SelectedFolders {
         get => selectedFolders;
         set {
-            selectedFolders = value;
-            this.RaisePropertyChanged();
+            this.RaiseAndSetIfChanged(ref selectedFolders, value);
             this.RaisePropertyChanged(nameof(AreFoldersSelected));
             FilterFiles();
         }
@@ -67,36 +60,54 @@ public class MainViewModel : ViewModelBase
     public string FilterFilesText {
         get => filterFilesText;
         set {
-            filterFilesText = value;
-            this.RaisePropertyChanged();
+            this.RaiseAndSetIfChanged(ref filterFilesText, value);
             FilterFiles();
         }
     }
 
-    private ObservableCollection<Uri> filteredFiles;
+    private ObservableCollection<Uri> filteredFiles = [];
 
     public ObservableCollection<Uri> FilteredFiles {
         get => filteredFiles;
-        set {
-            filteredFiles = value;
-            this.RaisePropertyChanged();
-        }
+        set => this.RaiseAndSetIfChanged(ref filteredFiles, value);
+    }
+
+    private IBrush filterFilesTextColor = Brushes.White;
+
+    public IBrush FilterFilesTextColor {
+        get => filterFilesTextColor;
+        set => this.RaiseAndSetIfChanged(ref filterFilesTextColor, value);
     }
 
     private void FilterFiles() {
         FilteredFiles = [];
         SearchOption searchOption = IncludeSubfolders ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
+
+        Regex? regex = null;
+        try {
+            regex = new Regex(FilterFilesText);
+            FilterFilesTextColor = Brushes.White;
+        }
+        catch (RegexParseException) {
+            FilterFilesTextColor = Brushes.Red;
+        }
+        catch (Exception) {
+            // ignored
+        }
+        
         foreach (Uri folder in SelectedFolders) {
             foreach (string file in Directory.GetFiles(folder.LocalPath, "*", searchOption)) {
-                FilteredFiles.Add(new Uri(file));
+                if (regex != null && regex.IsMatch(file)) {
+                    FilteredFiles.Add(new Uri(file));
+                }
             }
         }
     }
 
     public MainViewModel() {
-        selectFoldersView = new SelectFoldersView();
-        filterFilesView = new FilterFilesView();
-        renameFilesView = new RenameFilesView();
+        UserControl selectFoldersView = new SelectFoldersView();
+        UserControl filterFilesView = new FilterFilesView();
+        UserControl renameFilesView = new RenameFilesView();
         
         content = selectFoldersView;
         
