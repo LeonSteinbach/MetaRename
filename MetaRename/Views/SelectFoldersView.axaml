@@ -33,9 +33,8 @@
             <CheckBox DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="0,20,0,20"
                       IsChecked="{Binding IncludeSubfolders}">Include subfolders</CheckBox>
             <DataGrid DockPanel.Dock="Bottom" HorizontalAlignment="Center" BorderThickness="1" BorderBrush="Gray"
-                      IsVisible="{Binding AreFoldersSelected}"
-                      ItemsSource="{Binding SelectedFolders}"
-                      IsReadOnly="True">
+                      IsVisible="{Binding AreFoldersSelected}" IsReadOnly="True"
+                      ItemsSource="{Binding SelectedFolders}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Width="*" Header="Path" Binding="{Binding LocalPath}" />
                 </DataGrid.Columns>

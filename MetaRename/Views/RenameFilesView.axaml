@@ -2,7 +2,91 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:MetaRename.ViewModels"
+             xmlns:bh="using:MetaRename.ViewModels.Behaviors"
+             xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="MetaRename.Views.RenameFilesView">
-    Rename Files View
+             x:Class="MetaRename.Views.RenameFilesView"
+             x:DataType="vm:MainViewModel">
+
+    <Design.DataContext>
+        <vm:MainViewModel />
+    </Design.DataContext>
+
+    <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,*" Margin="50 0">
+        <StackPanel Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2">
+            <TextBlock FontSize="18" Margin="0,0,0,10">Configure dynamic naming pattern</TextBlock>
+
+            <WrapPanel Margin="0,0,0,40">
+                <AutoCompleteBox HorizontalAlignment="Left" Name="Pattern1AutoCompleteBox" Width="175"
+                                 IsTextCompletionEnabled="True" FilterMode="Contains"
+                                 ItemsSource="{Binding AvailablePatterns}"
+                                 SelectedItem="Camera model">
+                    <i:Interaction.Behaviors>
+                        <bh:AutoCompleteBoxBehavior />
+                    </i:Interaction.Behaviors>
+                </AutoCompleteBox>
+                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center">+</TextBlock>
+                <AutoCompleteBox HorizontalAlignment="Left" Name="Pattern2AutoCompleteBox" Width="175"
+                                 IsTextCompletionEnabled="True" FilterMode="Contains"
+                                 ItemsSource="{Binding AvailablePatterns}"
+                                 SelectedItem="_">
+                    <i:Interaction.Behaviors>
+                        <bh:AutoCompleteBoxBehavior />
+                    </i:Interaction.Behaviors>
+                </AutoCompleteBox>
+                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center">+</TextBlock>
+                <AutoCompleteBox HorizontalAlignment="Left" Name="Pattern3AutoCompleteBox" Width="175"
+                                 IsTextCompletionEnabled="True" FilterMode="Contains"
+                                 ItemsSource="{Binding AvailablePatterns}"
+                                 SelectedItem="yyyyMMdd">
+                    <i:Interaction.Behaviors>
+                        <bh:AutoCompleteBoxBehavior />
+                    </i:Interaction.Behaviors>
+                </AutoCompleteBox>
+                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center">+</TextBlock>
+                <AutoCompleteBox HorizontalAlignment="Left" Name="Pattern4AutoCompleteBox" Width="175"
+                                 IsTextCompletionEnabled="True" FilterMode="Contains"
+                                 ItemsSource="{Binding AvailablePatterns}"
+                                 SelectedItem="_">
+                    <i:Interaction.Behaviors>
+                        <bh:AutoCompleteBoxBehavior />
+                    </i:Interaction.Behaviors>
+                </AutoCompleteBox>
+                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center">+</TextBlock>
+                <AutoCompleteBox HorizontalAlignment="Left" Name="Pattern5AutoCompleteBox" Width="175"
+                                 IsTextCompletionEnabled="True" FilterMode="Contains"
+                                 ItemsSource="{Binding AvailablePatterns}"
+                                 SelectedItem="HHmmss">
+                    <i:Interaction.Behaviors>
+                        <bh:AutoCompleteBoxBehavior />
+                    </i:Interaction.Behaviors>
+                </AutoCompleteBox>
+                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center">+</TextBlock>
+                <AutoCompleteBox HorizontalAlignment="Left" Name="Pattern6AutoCompleteBox" Width="175"
+                                 IsTextCompletionEnabled="True" FilterMode="Contains"
+                                 ItemsSource="{Binding AvailablePatterns}">
+                    <i:Interaction.Behaviors>
+                        <bh:AutoCompleteBoxBehavior />
+                    </i:Interaction.Behaviors>
+                </AutoCompleteBox>
+            </WrapPanel>
+        </StackPanel>
+
+        <Grid Grid.Column="0" Grid.Row="1" Margin="0,0,20,0" RowDefinitions="Auto,*">
+            <TextBlock Grid.Row="0" FontSize="18" Margin="0,0,0,10">Configure static naming patterns</TextBlock>
+            <TextBox Grid.Row="1" AcceptsReturn="True" TextWrapping="NoWrap" Width="300" VerticalAlignment="Stretch" />
+        </Grid>
+
+        <Grid Grid.Column="1" Grid.Row="1" Margin="0,0,0,0" RowDefinitions="Auto,*">
+            <TextBlock Grid.Row="0" FontSize="18" Margin="0,0,0,10">Preview</TextBlock>
+            <DataGrid Grid.Row="1" BorderThickness="1" BorderBrush="Gray" IsReadOnly="True"
+                      ItemsSource="{Binding FilteredFiles}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Width="*" Header="Path" Binding="{Binding LocalPath}" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </Grid>
+
 </UserControl>

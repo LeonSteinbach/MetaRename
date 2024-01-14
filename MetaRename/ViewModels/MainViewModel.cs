@@ -15,6 +15,8 @@ namespace MetaRename.ViewModels;
 public class MainViewModel : ViewModelBase
 {
     public bool ShowBackViewButton => Content?.GetType() != typeof(SelectFoldersView);
+    public bool ShowContinueViewButton => Content?.GetType() != typeof(RenameFilesView);
+    public bool ShowRenameButtons => Content?.GetType() == typeof(RenameFilesView);
 
     private UserControl? content;
 
@@ -23,13 +25,15 @@ public class MainViewModel : ViewModelBase
         set {
             this.RaiseAndSetIfChanged(ref content, value);
             this.RaisePropertyChanged(nameof(ShowBackViewButton));
+            this.RaisePropertyChanged(nameof(ShowContinueViewButton));
+            this.RaisePropertyChanged(nameof(ShowRenameButtons));
         }
     }
 
     public ICommand BackViewCommand { get; }
-    
+
     public ICommand ContinueViewCommand { get; }
-    
+
     public ICommand OpenFolderCommand { get; }
 
     private bool includeSubfolders;
@@ -45,7 +49,7 @@ public class MainViewModel : ViewModelBase
     public bool AreFoldersSelected => SelectedFolders.Count > 0;
 
     private ObservableCollection<Uri> selectedFolders = [];
-    
+
     public ObservableCollection<Uri> SelectedFolders {
         get => selectedFolders;
         set {
@@ -79,6 +83,11 @@ public class MainViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref filterFilesTextColor, value);
     }
 
+    public static ObservableCollection<string> AvailablePatterns => [
+        "yyyyMMdd", "HHmmss", "Document Name", "document name", "DOCUMENT NAME", "Camera manufacturer", "Camera model",
+        "1 digit number", "2 digit number", "3 digit number", "4 digit number", "5 digit number", "6 digit number"
+    ];
+
     private void FilterFiles() {
         FilteredFiles = [];
         SearchOption searchOption = IncludeSubfolders ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
@@ -94,7 +103,7 @@ public class MainViewModel : ViewModelBase
         catch (Exception) {
             // ignored
         }
-        
+
         foreach (Uri folder in SelectedFolders) {
             foreach (string file in Directory.GetFiles(folder.LocalPath, "*", searchOption)) {
                 if (regex != null && regex.IsMatch(file)) {
@@ -108,12 +117,12 @@ public class MainViewModel : ViewModelBase
         UserControl selectFoldersView = new SelectFoldersView();
         UserControl filterFilesView = new FilterFilesView();
         UserControl renameFilesView = new RenameFilesView();
-        
+
         content = selectFoldersView;
-        
+
         SelectedFolders = [];
         FilteredFiles = [];
-        
+
         BackViewCommand = ReactiveCommand.Create(() => {
             Type? contentType = Content?.GetType();
 
@@ -124,10 +133,10 @@ public class MainViewModel : ViewModelBase
                 _ => Content
             };
         });
-        
+
         ContinueViewCommand = ReactiveCommand.Create(() => {
             Type? contentType = Content?.GetType();
-            
+
             Content = contentType switch {
                 _ when contentType == typeof(SelectFoldersView) => filterFilesView,
                 _ when contentType == typeof(FilterFilesView) => renameFilesView,
@@ -135,7 +144,7 @@ public class MainViewModel : ViewModelBase
                 _ => Content
             };
         });
-        
+
         OpenFolderCommand = ReactiveCommand.Create(async () => {
             var options = new FolderPickerOpenOptions {
                 AllowMultiple = true

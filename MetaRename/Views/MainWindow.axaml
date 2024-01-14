@@ -37,8 +37,14 @@
             <WrapPanel Grid.Row="1" Margin="0,0,0,50" HorizontalAlignment="Center">
                 <Button Command="{Binding BackViewCommand}"
                         IsVisible="{Binding ShowBackViewButton}">Back</Button>
-                <Button Command="{Binding ContinueViewCommand}">Continue</Button>
+                <Button Command="{Binding ContinueViewCommand}"
+                        IsVisible="{Binding ShowContinueViewButton}">Continue</Button>
             </WrapPanel>
+            <Grid HorizontalAlignment="Right" Grid.Row="1" Margin="0,0,50,50" ColumnDefinitions="Auto,Auto"
+                  IsVisible="{Binding ShowRenameButtons}">
+                <Button Grid.Column="0">Rename all</Button>
+                <Button Grid.Column="1">Rename successful only</Button>
+            </Grid>
         </Grid>
     </Panel>
 
